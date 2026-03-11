@@ -32,6 +32,8 @@
 | 规约 | 文件 | 适用场景 |
 |------|------|----------|
 | Tauri (Rust + React) | `desktop/tauri-rust-react-desktop-reference.md` | 跨平台桌面应用、Rust 壳 + 前端 |
+| Qt (C++/QML) | `desktop/qt-desktop-reference.md` | Qt 6 桌面应用、C++/QML 原生 UI |
+| Python Qt (PySide6/PyQt6) | `desktop/python-qt-desktop-reference.md` | Python 桌面应用、PySide6/PyQt6 |
 
 ---
 
@@ -50,6 +52,14 @@
 |------|------|----------|
 | AI Agent / LLM 应用 | `ai-and-data/ai-agent-llm-reference.md` | LangChain、RAG、Agent、Prompt 工程 |
 | 数据 / ML 工程 | `ai-and-data/data-ml-project-reference.md` | ETL、特征工程、MLOps、数据管道 |
+
+---
+
+## 样式与图标库参考
+
+| 文档 | 说明 |
+|------|------|
+| 样式库与图标库参考（`frontend/ui-style-and-icons-reference.md`） | Web / 桌面 / App / 小程序 的样式方案、UI 组件库与图标库选型表，含推荐链接与各规约对应关系 |
 
 ---
 
