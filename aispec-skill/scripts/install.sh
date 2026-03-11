@@ -46,6 +46,10 @@ SPEC_FILE=""
 PROJECT_NAME="$(basename "$TARGET_ROOT")"
 
 detect() {
+  if [[ -f "$TARGET_ROOT/SKILL.md" ]]; then
+    echo "system-tools/skill-development-reference.md"
+    return
+  fi
   if [[ -f "$TARGET_ROOT/package.json" ]]; then
     if grep -q '"next"' "$TARGET_ROOT/package.json" 2>/dev/null || grep -q '"nextjs"' "$TARGET_ROOT/package.json" 2>/dev/null; then
       echo "frontend/nextjs-vercel-reference.md"

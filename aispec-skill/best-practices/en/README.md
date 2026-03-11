@@ -43,6 +43,7 @@ This directory contains English best-practice specs, organized by tech stack and
 |------|------|----------|
 | Rust system/service | `system-tools/rust-system-service-reference.md` | Rust backend, high-perf services |
 | CLI tool | `system-tools/cli-tool-reference.md` | Command-line tools, multi-language CLI |
+| Skill development | `system-tools/skill-development-reference.md` | Developing Cursor/Claude etc. skills; pair with create-skill |
 
 ---
 

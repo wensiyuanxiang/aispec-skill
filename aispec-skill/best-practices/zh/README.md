@@ -43,6 +43,7 @@
 |------|------|----------|
 | Rust 系统/服务 | `system-tools/rust-system-service-reference.md` | Rust 后端、高性能服务 |
 | CLI 工具 | `system-tools/cli-tool-reference.md` | 命令行工具、多语言 CLI |
+| 技能开发（Skill 开发） | `system-tools/skill-development-reference.md` | 开发 Cursor/Claude 等编辑器用 Skill；可与 create-skill 配合 |
 
 ---
 

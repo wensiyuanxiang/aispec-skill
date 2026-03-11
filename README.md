@@ -2,11 +2,13 @@
 
 **中文 | [简体中文](README.zh-CN.md)**
 
+**Version:** [1.0.0](VERSION) · [Changelog](CHANGELOG.md)
+
 ---
 
 **One spec, every editor. One prompt, project-ready.**
 
-AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-practice content is used to generate and install **project-level specs** in different AI editors (Cursor, Claude Code, OpenClaw, Codex, etc.). In any project, ask the AI to "add best practices" or "set up project norms"—it will detect the stack and write the right spec files. the **same** best-practice content is used to generate and install **project-level specs** in different AI editors (Cursor, Claude Code, OpenClaw, Codex, etc.). In any project, ask the AI to "add best practices" or "set up project norms"—it will detect the stack and write the right spec files.
+AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-practice content is used to generate and install **project-level specs** in different AI editors (Cursor, Claude Code, OpenClaw, Codex, etc.). In any project, ask the AI to "add best practices" or "set up project norms"—it will detect the stack and write the right spec files.
 
 ---
 
@@ -23,7 +25,8 @@ AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-pra
 
 ## Use Cases
 
-- **New project**: In an empty or freshly initialized repo, ask the AI to "initialize best practices for this stack"; it generates and writes the spec.
+- **New or empty project**: In an **empty** directory, say e.g. "先帮我加一份 Next.js 项目规约" or "Add project norms for a Go backend before I scaffold." The AI will ask for project type if needed, then write the spec so you have norms from the first commit. No need to init code first.
+- **New project (after scaffold)**: In a freshly initialized repo, ask the AI to "initialize best practices for this stack"; it detects the stack and writes the spec.
 - **Existing project**: In an existing codebase, ask to "set up project norms"; the AI detects the stack and adds or updates spec files.
 - **Polyglot / monorepo**: For separate frontend/backend or monorepos, inject the right spec per subproject or path.
 - **Team standard**: Use this repo (or a fork) as the team standard and install specs into each project with one prompt.
@@ -131,6 +134,8 @@ Covers: Next.js, Vue/Nuxt, React Native, Flutter, miniprogram, Tauri, Qt, Python
 ## Repo layout
 
 - **README.md** / **README.zh-CN.md** — Project intro and usage (this file).
+- **VERSION** — Current skill/spec version (e.g. 1.0.0).
+- **CHANGELOG.md** — Version history and changes; see it when upgrading.
 - **install-skill.sh** — Install the skill into your editor (run once after clone).
 - **aispec-skill/scripts/install.sh** — Optional: write a spec into a project when the AI cannot access this repo.
 - **aispec-skill/** — Skill content: **SKILL.md**, **best-practices/** (zh/ and en/), and **scripts/**. This directory is what gets linked/copied into `~/.cursor/skills/aispec-skill` etc. by `install-skill.sh`.
