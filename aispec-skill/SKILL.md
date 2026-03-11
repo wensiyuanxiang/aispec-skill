@@ -53,10 +53,17 @@ description: 检测项目类型并注入最佳实践规约。触发词："添加
 
 读取规约文件，将 `[项目名]` 替换为实际项目名，然后写入：
 
-- **Cursor**：`.cursor/rules/project-spec.mdc`
-- **Claude Code**：`.claude/CLAUDE.md`（追加或新建）或 `.claude/rules/project-spec.md`
-- **Codex / OpenClaw**：`AGENTS.md` 或 `.codex/rules/`
-- 若无法判断编辑器，默认按 Cursor 格式写入。
+| 编辑器 | 写入路径 | 说明 |
+|--------|----------|------|
+| **Cursor** | `.cursor/rules/project-spec.mdc` | 一条规则一个文件，含 frontmatter |
+| **Claude Code** | `.claude/CLAUDE.md` 或 `.claude/rules/project-spec.md` | 追加或新建；主规约 + 模块化规则均可 |
+| **OpenClaw** | 根目录 `AGENTS.md`；可配合 `SOUL.md`（行为约束） | 有独立的 SOUL/MEMORY 体系 |
+| **Codex** | `AGENTS.md` 或 `.codex/rules/` | 按 Codex 文档配置 |
+| **Antigravity** (Google) | `.antigravity/rules.md` 或 `.agent/rules/project-spec.md` | 项目规则自动加载 |
+| **Trae**（字节） | `.trae/project_rules.md` 或 `.trae/rules/project-spec.md` | Markdown 格式 |
+| **Code Buddy**（腾讯云） | `.codebuddy/rules/project-spec/RULE.mdc` 或根目录 `AGENTS.md` | 每条规则一个子目录含 `RULE.mdc` |
+
+若无法判断编辑器，默认按 Cursor 格式写入。
 
 ### 4. 确认
 

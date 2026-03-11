@@ -50,7 +50,7 @@ AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutte
 
 | 工具 | 项目规约路径 | 说明 |
 |------|--------------|------|
-| **OpenClaw** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 与 Codex 同套技能/规则模型 |
+| **OpenClaw** | 根目录 `AGENTS.md`；可配合 `SOUL.md` | 独立 SOUL/MEMORY 体系；`AGENTS.md` 为主指令 |
 | **Claude Code** | `.claude/CLAUDE.md` 或 `.claude/rules/*.md` | 主规约 + 可选模块化规则 |
 | **Cursor** | `.cursor/rules/` | 每条规则一个 `.mdc` 或 `.md`（含 frontmatter） |
 | **Codex** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 按各工具文档配置 |
@@ -85,7 +85,7 @@ AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutte
 
 会在用户目录下为 Cursor、Claude Code、OpenClaw、Codex 安装技能（`~/.cursor/skills/`、`~/.claude/skills/` 等）。对于 **Claude Code**，脚本会在 `~/.claude/CLAUDE.md`（全局）中追加技能加载段，或在 `.claude/rules/aispec-skill.md`（本地）创建规则加载器，使 Claude Code 能发现此技能（Claude Code 全局只读 `CLAUDE.md`，不扫描 `skills/`）。参数说明：
 
-- `--tool cursor|claude|openclaw|codex|all`（默认 all）
+- `--tool cursor|claude|openclaw|codex|antigravity|trae|codebuddy|all`（默认 all）
 - `--scope global|local`（默认 global）。选 `local` 则只对指定项目生效。
 - `--target DIR`（在 `--scope local` 时：项目根目录，默认当前目录）
 - `--method link|copy`（默认 link。若系统或编辑器不认符号链接，可改为 copy）

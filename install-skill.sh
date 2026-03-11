@@ -30,24 +30,30 @@ SKILL_SRC="$REPO_ROOT/aispec-skill"
 SKILL_NAME="aispec-skill"
 
 usage() {
-  echo "Usage: $0 [--tool cursor|claude|openclaw|codex|all] [--scope global|local] [--target DIR] [--method link|copy] [--lang en|zh]"
+  echo "Usage: $0 [--tool TOOL|all] [--scope global|local] [--target DIR] [--method link|copy] [--lang en|zh]"
   echo ""
-  echo "  --tool   Tool(s) to install for (default: all)"
+  echo "  --tool   cursor|claude|openclaw|codex|antigravity|trae|codebuddy|all (default: all)"
   echo "  --scope  global = user-wide, local = project-only (default: global)"
   echo "  --target For local scope: project root (default: current dir)"
   echo "  --method link = symlink repo, copy = copy files (default: link)"
-  echo "  --lang   SKILL.md language: en (English, default) or zh (Chinese)"
+  echo "  --lang   SKILL.md language: zh (Chinese, default) or en (English)"
   echo "           If omitted, the script will ask interactively."
   echo ""
   echo "Paths used:"
-  echo "  Cursor global:    ~/.cursor/skills/$SKILL_NAME"
-  echo "  Cursor local:     <target>/.cursor/skills/$SKILL_NAME"
-  echo "  Claude global:    ~/.claude/skills/$SKILL_NAME"
-  echo "  Claude local:     <target>/.claude/skills/$SKILL_NAME"
-  echo "  OpenClaw global:  ~/.openclaw/skills/$SKILL_NAME"
-  echo "  OpenClaw local:   <target>/.openclaw/skills/$SKILL_NAME"
-  echo "  Codex global:     ~/.codex/skills/$SKILL_NAME"
-  echo "  Codex local:      <target>/.codex/skills/$SKILL_NAME"
+  echo "  Cursor global:       ~/.cursor/skills/$SKILL_NAME"
+  echo "  Cursor local:        <target>/.cursor/skills/$SKILL_NAME"
+  echo "  Claude global:       ~/.claude/skills/$SKILL_NAME"
+  echo "  Claude local:        <target>/.claude/skills/$SKILL_NAME"
+  echo "  OpenClaw global:     ~/.openclaw/skills/$SKILL_NAME"
+  echo "  OpenClaw local:      <target>/.openclaw/skills/$SKILL_NAME"
+  echo "  Codex global:        ~/.codex/skills/$SKILL_NAME"
+  echo "  Codex local:         <target>/.codex/skills/$SKILL_NAME"
+  echo "  Antigravity global:  ~/.antigravity/skills/$SKILL_NAME"
+  echo "  Antigravity local:   <target>/.antigravity/skills/$SKILL_NAME"
+  echo "  Trae global:         ~/.trae/skills/$SKILL_NAME"
+  echo "  Trae local:          <target>/.trae/skills/$SKILL_NAME"
+  echo "  Code Buddy global:   ~/.codebuddy/skills/$SKILL_NAME"
+  echo "  Code Buddy local:    <target>/.codebuddy/skills/$SKILL_NAME"
   exit 0
 }
 
@@ -201,23 +207,21 @@ install_for() {
 
 if [[ "$SCOPE" == "global" ]]; then
   case "$TOOL" in
-    cursor)
-      install_for cursor "$HOME/.cursor/skills/$SKILL_NAME" "Cursor (global)"
-      ;;
-    claude)
-      install_for claude "$HOME/.claude/skills/$SKILL_NAME" "Claude Code (global)"
-      ;;
-    openclaw)
-      install_for openclaw "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
-      ;;
-    codex)
-      install_for codex "$HOME/.codex/skills/$SKILL_NAME" "Codex (global)"
-      ;;
+    cursor)       install_for cursor       "$HOME/.cursor/skills/$SKILL_NAME"       "Cursor (global)" ;;
+    claude)       install_for claude       "$HOME/.claude/skills/$SKILL_NAME"       "Claude Code (global)" ;;
+    openclaw)     install_for openclaw     "$HOME/.openclaw/skills/$SKILL_NAME"     "OpenClaw (global)" ;;
+    codex)        install_for codex        "$HOME/.codex/skills/$SKILL_NAME"        "Codex (global)" ;;
+    antigravity)  install_for antigravity  "$HOME/.antigravity/skills/$SKILL_NAME"  "Antigravity (global)" ;;
+    trae)         install_for trae         "$HOME/.trae/skills/$SKILL_NAME"         "Trae (global)" ;;
+    codebuddy)    install_for codebuddy    "$HOME/.codebuddy/skills/$SKILL_NAME"    "Code Buddy (global)" ;;
     all)
-      install_for cursor   "$HOME/.cursor/skills/$SKILL_NAME"   "Cursor (global)"
-      install_for claude   "$HOME/.claude/skills/$SKILL_NAME"   "Claude Code (global)"
-      install_for openclaw "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
-      install_for codex    "$HOME/.codex/skills/$SKILL_NAME"    "Codex (global)"
+      install_for cursor       "$HOME/.cursor/skills/$SKILL_NAME"       "Cursor (global)"
+      install_for claude       "$HOME/.claude/skills/$SKILL_NAME"       "Claude Code (global)"
+      install_for openclaw     "$HOME/.openclaw/skills/$SKILL_NAME"     "OpenClaw (global)"
+      install_for codex        "$HOME/.codex/skills/$SKILL_NAME"        "Codex (global)"
+      install_for antigravity  "$HOME/.antigravity/skills/$SKILL_NAME"  "Antigravity (global)"
+      install_for trae         "$HOME/.trae/skills/$SKILL_NAME"         "Trae (global)"
+      install_for codebuddy    "$HOME/.codebuddy/skills/$SKILL_NAME"    "Code Buddy (global)"
       ;;
     *)
       echo "Unknown tool: $TOOL" >&2
@@ -226,23 +230,21 @@ if [[ "$SCOPE" == "global" ]]; then
   esac
 else
   case "$TOOL" in
-    cursor)
-      install_for cursor "$TARGET/.cursor/skills/$SKILL_NAME" "Cursor (local)"
-      ;;
-    claude)
-      install_for claude "$TARGET/.claude/skills/$SKILL_NAME" "Claude Code (local)"
-      ;;
-    openclaw)
-      install_for openclaw "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
-      ;;
-    codex)
-      install_for codex "$TARGET/.codex/skills/$SKILL_NAME" "Codex (local)"
-      ;;
+    cursor)       install_for cursor       "$TARGET/.cursor/skills/$SKILL_NAME"       "Cursor (local)" ;;
+    claude)       install_for claude       "$TARGET/.claude/skills/$SKILL_NAME"       "Claude Code (local)" ;;
+    openclaw)     install_for openclaw     "$TARGET/.openclaw/skills/$SKILL_NAME"     "OpenClaw (local)" ;;
+    codex)        install_for codex        "$TARGET/.codex/skills/$SKILL_NAME"        "Codex (local)" ;;
+    antigravity)  install_for antigravity  "$TARGET/.antigravity/skills/$SKILL_NAME"  "Antigravity (local)" ;;
+    trae)         install_for trae         "$TARGET/.trae/skills/$SKILL_NAME"         "Trae (local)" ;;
+    codebuddy)    install_for codebuddy    "$TARGET/.codebuddy/skills/$SKILL_NAME"    "Code Buddy (local)" ;;
     all)
-      install_for cursor   "$TARGET/.cursor/skills/$SKILL_NAME"   "Cursor (local)"
-      install_for claude   "$TARGET/.claude/skills/$SKILL_NAME"   "Claude Code (local)"
-      install_for openclaw "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
-      install_for codex    "$TARGET/.codex/skills/$SKILL_NAME"    "Codex (local)"
+      install_for cursor       "$TARGET/.cursor/skills/$SKILL_NAME"       "Cursor (local)"
+      install_for claude       "$TARGET/.claude/skills/$SKILL_NAME"       "Claude Code (local)"
+      install_for openclaw     "$TARGET/.openclaw/skills/$SKILL_NAME"     "OpenClaw (local)"
+      install_for codex        "$TARGET/.codex/skills/$SKILL_NAME"        "Codex (local)"
+      install_for antigravity  "$TARGET/.antigravity/skills/$SKILL_NAME"  "Antigravity (local)"
+      install_for trae         "$TARGET/.trae/skills/$SKILL_NAME"         "Trae (local)"
+      install_for codebuddy    "$TARGET/.codebuddy/skills/$SKILL_NAME"    "Code Buddy (local)"
       ;;
     *)
       echo "Unknown tool: $TOOL" >&2

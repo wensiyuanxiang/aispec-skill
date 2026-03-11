@@ -53,10 +53,17 @@ Frontend/desktop projects may also benefit from `frontend/ui-style-and-icons-ref
 
 Read the spec, replace `[项目名]` / `[Project Name]` with actual name, then write:
 
-- **Cursor**: `.cursor/rules/project-spec.mdc`
-- **Claude Code**: `.claude/CLAUDE.md` (append or create) or `.claude/rules/project-spec.md`
-- **Codex / OpenClaw**: `AGENTS.md` or `.codex/rules/`
-- Default to Cursor format if editor unknown.
+| Editor | Write path | Notes |
+|--------|------------|-------|
+| **Cursor** | `.cursor/rules/project-spec.mdc` | One rule per file with frontmatter |
+| **Claude Code** | `.claude/CLAUDE.md` or `.claude/rules/project-spec.md` | Append or create; main spec + modular rules |
+| **OpenClaw** | Root `AGENTS.md`; optionally `SOUL.md` (behavioral constraints) | Has its own SOUL/MEMORY system |
+| **Codex** | `AGENTS.md` or `.codex/rules/` | Per Codex docs |
+| **Antigravity** (Google) | `.antigravity/rules.md` or `.agent/rules/project-spec.md` | Project rules auto-loaded |
+| **Trae** (ByteDance) | `.trae/project_rules.md` or `.trae/rules/project-spec.md` | Markdown format |
+| **Code Buddy** (Tencent) | `.codebuddy/rules/project-spec/RULE.mdc` or root `AGENTS.md` | One subdir per rule with `RULE.mdc` |
+
+Default to Cursor format if editor unknown.
 
 ### 4. Confirm
 

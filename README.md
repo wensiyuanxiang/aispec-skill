@@ -50,7 +50,7 @@ AISpec Skill bundles **best-practice project specs** for **mainstream stacks and
 
 | Tool | Project spec path | Notes |
 |------|-------------------|-------|
-| **OpenClaw** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir | Same skill/rules model as Codex |
+| **OpenClaw** | Root `AGENTS.md`; optionally `SOUL.md` | Own SOUL/MEMORY system; `AGENTS.md` as main instruction |
 | **Claude Code** | `.claude/CLAUDE.md` or `.claude/rules/*.md` | Main spec + optional modular rules |
 | **Cursor** | `.cursor/rules/` | One `.mdc` or `.md` per rule (with frontmatter) |
 | **Codex** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir | Per-tool docs |
@@ -85,7 +85,7 @@ After cloning this repo, run from the **repo root**:
 
 This installs the skill for Cursor, Claude Code, OpenClaw, and Codex in your user directory (`~/.cursor/skills/`, `~/.claude/skills/`, etc.). For **Claude Code**, the script also appends a skill loader section to `~/.claude/CLAUDE.md` (global) or creates `.claude/rules/aispec-skill.md` (local) so that Claude Code can discover the skill (Claude Code only reads `CLAUDE.md` globally, not `skills/`). Options:
 
-- `--tool cursor|claude|openclaw|codex|all` (default: all)
+- `--tool cursor|claude|openclaw|codex|antigravity|trae|codebuddy|all` (default: all)
 - `--scope global|local` (default: global). Use `local` to install only for one project.
 - `--target DIR` (for `--scope local`: project root, default: current dir)
 - `--method link|copy` (default: link). Use `copy` if your OS or editor does not follow symlinks.
