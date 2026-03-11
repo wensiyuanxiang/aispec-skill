@@ -50,6 +50,17 @@ AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutte
 
 ---
 
+## 在 GitHub 上如何标注本仓库
+
+本仓库是 **AI 编程技能**（面向 AI 编辑器的项目最佳实践规约），不是 Shell 脚本项目。在 GitHub 上建议这样标注：
+
+1. **简介**（仓库名下方）：例如 *「AISpec Skill – Unified Best Practices & Rules for AI Code Editors. OpenClaw, Claude Code, Cursor, Codex.」*（About 中可突出 OpenClaw、Claude Code、Cursor）。
+2. **Topics（标签）**：在仓库页添加例如 `skill` `ai-editor` `best-practices` `cursor` `openclaw` `claude-code` `codex` `coding-standards` `project-spec` `aispec`，便于被归为「skill / ai-editor」而非「Shell」。
+
+仓库内已通过 `.gitattributes` 让语言统计以 Markdown（技能/文档）为主，而非 Shell（安装脚本）。
+
+---
+
 ## 安装与使用
 
 **技能不依赖脚本即可工作**：AI 阅读 `aispec-skill/SKILL.md`，在你说「添加最佳实践」时自动检测项目并写入对应规约。技能本体（SKILL.md + 最佳实践）在 **`aispec-skill/`** 目录下。

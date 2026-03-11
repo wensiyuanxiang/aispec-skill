@@ -50,6 +50,17 @@ AISpec Skill bundles **best-practice project specs** for **mainstream stacks and
 
 ---
 
+## How to label this repo on GitHub
+
+This repo is an **AI programming skill** (best-practice specs for AI editors), not a Shell tool. To show that on GitHub:
+
+1. **Description** (under the repo name): e.g. *"AISpec Skill – Unified Best Practices & Rules for AI Code Editors. OpenClaw, Claude Code, Cursor, Codex."*
+2. **Topics** (Add topics on the repo page): `skill` `ai-editor` `best-practices` `cursor` `openclaw` `claude-code` `codex` `coding-standards` `project-spec` `aispec` — so it appears under "skill" / "ai-editor" rather than "Shell".
+
+The repo uses `.gitattributes` so the language bar favors Markdown (skill/docs) over Shell (install script).
+
+---
+
 ## Install & Use
 
 The skill works **without any script**: the AI reads `aispec-skill/SKILL.md` and, when you ask to add best practices, detects your project and writes the right spec. Skill content (SKILL.md + best-practices) lives in the **`aispec-skill/`** directory.

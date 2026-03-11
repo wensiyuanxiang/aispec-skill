@@ -1,0 +1,2 @@
+# Prefer Markdown as the displayed language (skill/docs repo, not a Shell project)
+*.sh linguist-documentation=true
