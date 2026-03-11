@@ -83,19 +83,22 @@ After cloning this repo, run from the **repo root**:
 ./install-skill.sh --tool all --scope global
 ```
 
-This installs the skill for Cursor, Claude Code, OpenClaw, and Codex in your user directory (`~/.cursor/skills/`, `~/.claude/skills/`, etc.). Options:
+This installs the skill for Cursor, Claude Code, OpenClaw, and Codex in your user directory (`~/.cursor/skills/`, `~/.claude/skills/`, etc.). For **Claude Code**, the script also appends a skill loader section to `~/.claude/CLAUDE.md` (global) or creates `.claude/rules/aispec-skill.md` (local) so that Claude Code can discover the skill (Claude Code only reads `CLAUDE.md` globally, not `skills/`). Options:
 
 - `--tool cursor|claude|openclaw|codex|all` (default: all)
 - `--scope global|local` (default: global). Use `local` to install only for one project.
 - `--target DIR` (for `--scope local`: project root, default: current dir)
 - `--method link|copy` (default: link). Use `copy` if your OS or editor does not follow symlinks.
+- `--lang en|zh` (SKILL.md language: English or Chinese). If omitted, the script will ask interactively. Choosing `zh` automatically uses copy mode so SKILL.md is replaced with the Chinese version.
 
 Examples:
 
 ```bash
-./install-skill.sh --tool cursor --scope global
+./install-skill.sh                                   # interactive: asks tool + language
+./install-skill.sh --tool cursor --scope global      # English (default)
+./install-skill.sh --tool all --lang zh              # Chinese SKILL.md for all tools
 ./install-skill.sh --tool openclaw --scope global    # OpenClaw only
-./install-skill.sh --tool claude --scope global      # Claude Code only
+./install-skill.sh --tool claude --lang zh           # Claude Code + Chinese
 ./install-skill.sh --tool all --scope local --target /path/to/my/project
 ./install-skill.sh --help
 ```

@@ -14,6 +14,7 @@
 #   --scope global|local                       (default: global)
 #   --target DIR                               (for local: project root; default: .)
 #   --method link|copy                         (default: link)
+#   --lang   en|zh                             (SKILL.md language; default: interactive prompt)
 
 set -e
 
@@ -21,6 +22,7 @@ TOOL=""
 SCOPE="global"
 TARGET=""
 METHOD="link"
+LANG_CHOICE=""
 
 # Repo root = directory containing this script; skill content = aispec-skill/ (SKILL.md + best-practices/)
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
@@ -28,12 +30,14 @@ SKILL_SRC="$REPO_ROOT/aispec-skill"
 SKILL_NAME="aispec-skill"
 
 usage() {
-  echo "Usage: $0 [--tool cursor|claude|openclaw|codex|all] [--scope global|local] [--target DIR] [--method link|copy]"
+  echo "Usage: $0 [--tool cursor|claude|openclaw|codex|all] [--scope global|local] [--target DIR] [--method link|copy] [--lang en|zh]"
   echo ""
   echo "  --tool   Tool(s) to install for (default: all)"
   echo "  --scope  global = user-wide, local = project-only (default: global)"
   echo "  --target For local scope: project root (default: current dir)"
   echo "  --method link = symlink repo, copy = copy files (default: link)"
+  echo "  --lang   SKILL.md language: en (English, default) or zh (Chinese)"
+  echo "           If omitted, the script will ask interactively."
   echo ""
   echo "Paths used:"
   echo "  Cursor global:    ~/.cursor/skills/$SKILL_NAME"
@@ -53,6 +57,7 @@ while [[ $# -gt 0 ]]; do
     --scope)  SCOPE="$2";  shift 2 ;;
     --target) TARGET="$2"; shift 2 ;;
     --method) METHOD="$2"; shift 2 ;;
+    --lang)   LANG_CHOICE="$2"; shift 2 ;;
     -h|--help) usage ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
   esac
@@ -60,6 +65,23 @@ done
 
 if [[ -z "$TOOL" ]]; then
   TOOL="all"
+fi
+
+# Interactive language prompt if --lang not specified
+if [[ -z "$LANG_CHOICE" ]]; then
+  echo "Select SKILL.md language / 选择技能文件语言:"
+  echo "  1) 中文 Chinese (default / 默认)"
+  echo "  2) English"
+  printf "Enter 1 or 2 [1]: "
+  read -r lang_input
+  case "$lang_input" in
+    2|en|EN|english) LANG_CHOICE="en" ;;
+    *) LANG_CHOICE="zh" ;;
+  esac
+fi
+
+if [[ "$LANG_CHOICE" == "en" ]]; then
+  METHOD="copy"
 fi
 
 if [[ "$SCOPE" == "local" ]]; then
@@ -93,32 +115,109 @@ install_one() {
   fi
 }
 
-echo "AISpec Skill install (tool=$TOOL scope=$SCOPE method=$METHOD)"
+# After install, if --lang en, overwrite SKILL.md with English version.
+# Default SKILL.md is Chinese; SKILL.en.md is the English alternative.
+apply_lang() {
+  local dest="$1"
+  if [[ "$LANG_CHOICE" != "en" ]]; then return; fi
+  if [[ ! -d "$dest" ]]; then return; fi
+  local en_src="$dest/SKILL.en.md"
+  local target="$dest/SKILL.md"
+  if [[ -f "$en_src" ]]; then
+    cp "$en_src" "$target"
+    echo "  -> SKILL.md replaced with English version"
+  fi
+}
+
+# Claude Code: global reads only ~/.claude/CLAUDE.md; project-level reads .claude/rules/.
+# For global: append skill loader to CLAUDE.md.
+# For local: create .claude/rules/aispec-skill.md (project-level rules are scanned).
+install_claude_loader() {
+  local skill_path="$1"
+  local kind="$2"
+
+  if [[ "$SCOPE" == "global" ]]; then
+    local claude_md="$HOME/.claude/CLAUDE.md"
+    if [[ -f "$claude_md" ]] && grep -q "aispec-skill/SKILL.md" "$claude_md" 2>/dev/null; then
+      echo "  $kind CLAUDE.md loader: already present"
+      return
+    fi
+    mkdir -p "$HOME/.claude"
+    cat >> "$claude_md" <<CLEOF
+
+---
+
+## AISpec Skill
+
+When the user asks to add best practices, set up project norms, initialize specs, or generate coding guidelines (e.g. "帮我添加最佳实践", "Add best practices", "初始化项目规约", "帮我制定项目规范"), read and follow the skill file at:
+
+\`\`\`
+$skill_path/SKILL.md
+\`\`\`
+
+That file contains the full workflow: detect project type, select the right spec, and write it into the user's project.
+CLEOF
+    echo "  $kind CLAUDE.md loader: appended to $claude_md"
+  else
+    local rules_dir="$TARGET/.claude/rules"
+    local loader="$rules_dir/aispec-skill.md"
+    mkdir -p "$rules_dir"
+    if [[ -f "$loader" ]]; then
+      echo "  $kind rule loader: already exists ($loader)"
+      return
+    fi
+    cat > "$loader" <<RULEEOF
+# AISpec Skill Loader
+
+When the user asks to add best practices, set up project norms, initialize specs, or generate coding guidelines (e.g. "帮我添加最佳实践", "Add best practices", "初始化项目规约", "帮我制定项目规范"), read and follow the skill file at:
+
+\`\`\`
+$skill_path/SKILL.md
+\`\`\`
+
+That file contains the full workflow: detect project type, select the right spec, and write it into the user's project.
+RULEEOF
+    echo "  $kind rule loader: created ($loader)"
+  fi
+}
+
+echo "AISpec Skill install (tool=$TOOL scope=$SCOPE method=$METHOD lang=$LANG_CHOICE)"
 echo "  Repo: $REPO_ROOT"
 if [[ "$SCOPE" == "local" ]]; then
   echo "  Target project: $TARGET"
 fi
 echo ""
 
+install_for() {
+  local tool_name="$1"
+  local dest="$2"
+  local kind="$3"
+  install_one "$dest" "$kind"
+  apply_lang "$dest"
+  if [[ "$tool_name" == "claude" ]]; then
+    install_claude_loader "$dest" "$kind"
+  fi
+}
+
 if [[ "$SCOPE" == "global" ]]; then
   case "$TOOL" in
     cursor)
-      install_one "$HOME/.cursor/skills/$SKILL_NAME" "Cursor (global)"
+      install_for cursor "$HOME/.cursor/skills/$SKILL_NAME" "Cursor (global)"
       ;;
     claude)
-      install_one "$HOME/.claude/skills/$SKILL_NAME" "Claude Code (global)"
+      install_for claude "$HOME/.claude/skills/$SKILL_NAME" "Claude Code (global)"
       ;;
     openclaw)
-      install_one "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
+      install_for openclaw "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
       ;;
     codex)
-      install_one "$HOME/.codex/skills/$SKILL_NAME" "Codex (global)"
+      install_for codex "$HOME/.codex/skills/$SKILL_NAME" "Codex (global)"
       ;;
     all)
-      install_one "$HOME/.cursor/skills/$SKILL_NAME" "Cursor (global)"
-      install_one "$HOME/.claude/skills/$SKILL_NAME" "Claude Code (global)"
-      install_one "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
-      install_one "$HOME/.codex/skills/$SKILL_NAME" "Codex (global)"
+      install_for cursor   "$HOME/.cursor/skills/$SKILL_NAME"   "Cursor (global)"
+      install_for claude   "$HOME/.claude/skills/$SKILL_NAME"   "Claude Code (global)"
+      install_for openclaw "$HOME/.openclaw/skills/$SKILL_NAME" "OpenClaw (global)"
+      install_for codex    "$HOME/.codex/skills/$SKILL_NAME"    "Codex (global)"
       ;;
     *)
       echo "Unknown tool: $TOOL" >&2
@@ -128,22 +227,22 @@ if [[ "$SCOPE" == "global" ]]; then
 else
   case "$TOOL" in
     cursor)
-      install_one "$TARGET/.cursor/skills/$SKILL_NAME" "Cursor (local)"
+      install_for cursor "$TARGET/.cursor/skills/$SKILL_NAME" "Cursor (local)"
       ;;
     claude)
-      install_one "$TARGET/.claude/skills/$SKILL_NAME" "Claude Code (local)"
+      install_for claude "$TARGET/.claude/skills/$SKILL_NAME" "Claude Code (local)"
       ;;
     openclaw)
-      install_one "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
+      install_for openclaw "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
       ;;
     codex)
-      install_one "$TARGET/.codex/skills/$SKILL_NAME" "Codex (local)"
+      install_for codex "$TARGET/.codex/skills/$SKILL_NAME" "Codex (local)"
       ;;
     all)
-      install_one "$TARGET/.cursor/skills/$SKILL_NAME" "Cursor (local)"
-      install_one "$TARGET/.claude/skills/$SKILL_NAME" "Claude Code (local)"
-      install_one "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
-      install_one "$TARGET/.codex/skills/$SKILL_NAME" "Codex (local)"
+      install_for cursor   "$TARGET/.cursor/skills/$SKILL_NAME"   "Cursor (local)"
+      install_for claude   "$TARGET/.claude/skills/$SKILL_NAME"   "Claude Code (local)"
+      install_for openclaw "$TARGET/.openclaw/skills/$SKILL_NAME" "OpenClaw (local)"
+      install_for codex    "$TARGET/.codex/skills/$SKILL_NAME"    "Codex (local)"
       ;;
     *)
       echo "Unknown tool: $TOOL" >&2
@@ -153,4 +252,8 @@ else
 fi
 
 echo ""
-echo "Done. Restart the editor if needed; then ask the AI to 'add best practices' in any project."
+if [[ "$LANG_CHOICE" == "zh" ]]; then
+  echo "完成。如需要请重启编辑器，然后在任意项目中对 AI 说「帮我添加最佳实践」即可。"
+else
+  echo "Done. Restart the editor if needed; then ask the AI to 'add best practices' in any project."
+fi

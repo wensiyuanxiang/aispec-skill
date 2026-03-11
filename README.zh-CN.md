@@ -83,19 +83,22 @@ AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutte
 ./install-skill.sh --tool all --scope global
 ```
 
-会在用户目录下为 Cursor、Claude Code、OpenClaw、Codex 安装技能（`~/.cursor/skills/`、`~/.claude/skills/` 等）。参数说明：
+会在用户目录下为 Cursor、Claude Code、OpenClaw、Codex 安装技能（`~/.cursor/skills/`、`~/.claude/skills/` 等）。对于 **Claude Code**，脚本会在 `~/.claude/CLAUDE.md`（全局）中追加技能加载段，或在 `.claude/rules/aispec-skill.md`（本地）创建规则加载器，使 Claude Code 能发现此技能（Claude Code 全局只读 `CLAUDE.md`，不扫描 `skills/`）。参数说明：
 
 - `--tool cursor|claude|openclaw|codex|all`（默认 all）
 - `--scope global|local`（默认 global）。选 `local` 则只对指定项目生效。
 - `--target DIR`（在 `--scope local` 时：项目根目录，默认当前目录）
 - `--method link|copy`（默认 link。若系统或编辑器不认符号链接，可改为 copy）
+- `--lang en|zh`（SKILL.md 语言：英文或中文）。不指定则交互式询问。选 `zh` 时自动切换为 copy 模式，将 SKILL.md 替换为中文版。
 
 示例：
 
 ```bash
-./install-skill.sh --tool cursor --scope global
+./install-skill.sh                                   # 交互式：询问工具 + 语言
+./install-skill.sh --tool cursor --scope global      # 英文（默认）
+./install-skill.sh --tool all --lang zh              # 所有工具 + 中文 SKILL.md
 ./install-skill.sh --tool openclaw --scope global    # 仅 OpenClaw
-./install-skill.sh --tool claude --scope global      # 仅 Claude Code
+./install-skill.sh --tool claude --lang zh           # Claude Code + 中文
 ./install-skill.sh --tool all --scope local --target /path/to/我的项目
 ./install-skill.sh --help
 ```
