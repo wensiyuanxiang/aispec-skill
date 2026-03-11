@@ -57,13 +57,15 @@ Read the spec, replace `[项目名]` / `[Project Name]` with actual name, then w
 |--------|------------|-------|
 | **Cursor** | `.cursor/rules/project-spec.mdc` | One rule per file with frontmatter |
 | **Claude Code** | `.claude/CLAUDE.md` or `.claude/rules/project-spec.md` | Append or create; main spec + modular rules |
-| **OpenClaw** | Root `AGENTS.md`; optionally `SOUL.md` (behavioral constraints) | Has its own SOUL/MEMORY system |
+| **OpenClaw** | See OpenClaw note below | Reads from workspace by default, not project root; can write to project root for version control |
 | **Codex** | `AGENTS.md` or `.codex/rules/` | Per Codex docs |
 | **Antigravity** (Google) | `.antigravity/rules.md` or `.agent/rules/project-spec.md` | Project rules auto-loaded |
 | **Trae** (ByteDance) | `.trae/project_rules.md` or `.trae/rules/project-spec.md` | Markdown format |
 | **Code Buddy** (Tencent) | `.codebuddy/rules/project-spec/RULE.mdc` or root `AGENTS.md` | One subdir per rule with `RULE.mdc` |
 
 Default to Cursor format if editor unknown.
+
+**OpenClaw**: By default **Claude Code is the code-writing agent** (e.g. OpenClaw invokes Claude Code to write code). OpenClaw loads `AGENTS.md` and `SOUL.md` from the **workspace** (config `agent.workspace`, often `~/.openclaw/workspace`), not from the current project root. This skill still writes **project-root** `AGENTS.md` (and optional `SOUL.md`) so the spec is versioned with the repo and shareable; the user can then point OpenClaw's workspace at the project root or copy/link project-root `AGENTS.md` into their workspace. Write the spec under the current project root only, not under `~/.openclaw/` or another project.
 
 ### 4. Confirm
 
@@ -73,4 +75,5 @@ List detected stack, spec chosen, and output path. Suggest checking `best-practi
 
 - Only use content from `best-practices/` files; do not invent.
 - No emoji in generated specs.
+- **Spec before code**: Do not write application/feature code until project spec has been created or installed. If the user asks for both "add spec" and "write code", complete the spec first and confirm briefly, then write code according to the spec. For empty or new projects, require spec first (or explicit user request to "write code first, spec later") before writing code.
 - If the AI cannot read `best-practices/` (skill not in context), tell the user to clone the repo or run `aispec-skill/scripts/install.sh`.

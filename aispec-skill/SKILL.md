@@ -57,13 +57,15 @@ description: 检测项目类型并注入最佳实践规约。触发词："添加
 |--------|----------|------|
 | **Cursor** | `.cursor/rules/project-spec.mdc` | 一条规则一个文件，含 frontmatter |
 | **Claude Code** | `.claude/CLAUDE.md` 或 `.claude/rules/project-spec.md` | 追加或新建；主规约 + 模块化规则均可 |
-| **OpenClaw** | 根目录 `AGENTS.md`；可配合 `SOUL.md`（行为约束） | 有独立的 SOUL/MEMORY 体系 |
+| **OpenClaw** | 见下方 OpenClaw 说明 | 默认从 workspace 读，非项目根；可写项目根以随仓版本管理 |
 | **Codex** | `AGENTS.md` 或 `.codex/rules/` | 按 Codex 文档配置 |
 | **Antigravity** (Google) | `.antigravity/rules.md` 或 `.agent/rules/project-spec.md` | 项目规则自动加载 |
 | **Trae**（字节） | `.trae/project_rules.md` 或 `.trae/rules/project-spec.md` | Markdown 格式 |
 | **Code Buddy**（腾讯云） | `.codebuddy/rules/project-spec/RULE.mdc` 或根目录 `AGENTS.md` | 每条规则一个子目录含 `RULE.mdc` |
 
 若无法判断编辑器，默认按 Cursor 格式写入。
+
+**OpenClaw 说明**：写代码时**默认以 Claude Code 为执行方**（如在 OpenClaw 中调起 Claude Code 写代码）。OpenClaw 从 **workspace**（配置项 `agent.workspace`，常见为 `~/.openclaw/workspace`）读取 `AGENTS.md`、`SOUL.md` 等，**不是**从“当前项目根目录”读。本技能仍建议在**当前项目根目录**生成 `AGENTS.md`（及可选 `SOUL.md`），以便规约随仓库版本管理、团队共享；用户若希望 OpenClaw 使用该规约，可：(1) 将 OpenClaw 的 workspace 指向项目根，或 (2) 把项目根下的 `AGENTS.md` 复制/链接到自己的 workspace。规约文件都写在当前项目根，不写到 `~/.openclaw/` 或其它项目。
 
 ### 4. 确认
 
@@ -73,4 +75,5 @@ description: 检测项目类型并注入最佳实践规约。触发词："添加
 
 - 只使用 `best-practices/` 中的内容，不可自行编造。
 - 生成的规约中不使用 emoji。
+- **先规约后代码**：未先创建或安装项目规约前，不编写业务/功能代码。若用户同时要求「加规约」和「写代码」，先完成规约写入并简要确认，再根据规约写代码。空项目或新项目也须先有规约（或用户明确说「先写代码、规约稍后」）再动代码。
 - 若 AI 无法读取 `best-practices/`（技能不在上下文中），提示用户克隆仓库或运行 `aispec-skill/scripts/install.sh`。

@@ -50,7 +50,7 @@ AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutte
 
 | 工具 | 项目规约路径 | 说明 |
 |------|--------------|------|
-| **OpenClaw** | 根目录 `AGENTS.md`；可配合 `SOUL.md` | 独立 SOUL/MEMORY 体系；`AGENTS.md` 为主指令 |
+| **OpenClaw** | 根目录 `AGENTS.md`（技能写此处便于随仓版本管理）；OpenClaw 默认从 workspace 加载 | 将 `agent.workspace` 指向项目根，或将根目录 `AGENTS.md` 复制到 workspace |
 | **Claude Code** | `.claude/CLAUDE.md` 或 `.claude/rules/*.md` | 主规约 + 可选模块化规则 |
 | **Cursor** | `.cursor/rules/` | 每条规则一个 `.mdc` 或 `.md`（含 frontmatter） |
 | **Codex** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 按各工具文档配置 |

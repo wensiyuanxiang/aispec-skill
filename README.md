@@ -50,7 +50,7 @@ AISpec Skill bundles **best-practice project specs** for **mainstream stacks and
 
 | Tool | Project spec path | Notes |
 |------|-------------------|-------|
-| **OpenClaw** | Root `AGENTS.md`; optionally `SOUL.md` | Own SOUL/MEMORY system; `AGENTS.md` as main instruction |
+| **OpenClaw** | Root `AGENTS.md` (skill writes here for version control); OpenClaw loads from workspace by default | Set `agent.workspace` to project root or copy root `AGENTS.md` into workspace |
 | **Claude Code** | `.claude/CLAUDE.md` or `.claude/rules/*.md` | Main spec + optional modular rules |
 | **Cursor** | `.cursor/rules/` | One `.mdc` or `.md` per rule (with frontmatter) |
 | **Codex** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir | Per-tool docs |
