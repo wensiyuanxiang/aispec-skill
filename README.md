@@ -24,6 +24,16 @@ AISpec Skill bundles **best-practice project specs** for **mainstream stacks and
 
 ---
 
+## Pain points we address
+
+| Pain point | How AISpec Skill helps |
+|------------|-------------------------|
+| **Code that screams "AI wrote this"** | Specs steer output toward human-style conventions: no emoji in code/comments, no generic AI aesthetics. Your code reads like a seasoned team’s, not a raw model dump. |
+| **Norms scattered across tools** | One spec set works across **OpenClaw**, **Claude Code**, **Cursor**, **Codex**. Switch editors or onboard teammates—same rules, no re-inventing per tool. |
+| **Beginners can’t ship production-grade code** | Best-practice rules are injected by prompt; structure, style, and patterns come from the spec. Non-experts get production-ready conventions from day one. |
+
+---
+
 ## Use Cases
 
 - **New or empty project**: In an **empty** directory, say e.g. "先帮我加一份 Next.js 项目规约" or "Add project norms for a Go backend before I scaffold." The AI will ask for project type if needed, then write the spec so you have norms from the first commit. No need to init code first.
