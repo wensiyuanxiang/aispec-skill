@@ -8,7 +8,7 @@
 
 **One spec, every editor. One prompt, project-ready.**
 
-AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-practice content is used to generate and install **project-level specs** in different AI editors (Cursor, Claude Code, OpenClaw, Codex, etc.). In any project, ask the AI to "add best practices" or "set up project norms"—it will detect the stack and write the right spec files.
+AISpec Skill bundles **best-practice project specs** for **mainstream stacks and frameworks** (Next.js, Vue/Nuxt, Flutter, Go, Java, Python, Node, Rust, Tauri, Qt, CLI, AI/LLM, and more). It helps your code follow **enterprise-grade architecture and conventions**—the kind used at scale—while making **team collaboration** and **project onboarding** straightforward. **Newcomers get top-tier structure from day one** without needing to be senior architects. Fully supports **OpenClaw**, **Claude Code**, **Cursor**, and **Codex**—one prompt in any of these editors and the right spec is written into your project. OpenClaw and Claude Code users can install the skill the same way as Cursor.
 
 ---
 
@@ -16,10 +16,11 @@ AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-pra
 
 | Value | Description |
 |-------|-------------|
-| **Consistency** | Same norms across editors for teams and individuals; less drift and duplicate work. |
-| **Discoverability** | New members or projects get a full set of dev specs in one shot instead of writing from scratch. |
-| **Maintainability** | Specs live in a single place; update once and re-run the skill to sync into projects. |
-| **Multi-editor** | One best-practice set outputs to Cursor, Claude, Codex, etc., without rewriting per tool. |
+| **Mainstream + enterprise-grade** | Specs align with widely adopted frameworks and big-tech software architecture best practices; your project speaks the same language as mature codebases. |
+| **Team alignment** | Same norms across editors and repos; different members and teams stay in sync, with less drift and easier code review and handoff. |
+| **Newcomer-friendly** | New joiners and new projects get a full, battle-tested spec in one shot—no need to reverse-engineer “how we do things here” or reinvent structure. |
+| **Maintainability** | Specs live in one place; update once and re-run the skill to refresh projects. |
+| **Multi-editor** | One best-practice set works in **OpenClaw**, **Claude Code**, Cursor, Codex, and more—no rewriting per tool. |
 
 ---
 
@@ -35,13 +36,14 @@ AISpec Skill is a **universal AI coding-assistant skill**: the **same** best-pra
 
 ## Supported AI Editors
 
-Project-level spec paths (in-repo only; user/global paths omitted):
+**Fully supported:** **OpenClaw**, **Claude Code**, **Cursor**, **Codex** — install the skill once, use in any of them. Project-level spec paths (in-repo only; user/global paths omitted):
 
 | Tool | Project spec path | Notes |
 |------|-------------------|-------|
-| **Cursor** | `.cursor/rules/` | One `.mdc` or `.md` per rule (with frontmatter) |
+| **OpenClaw** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir | Same skill/rules model as Codex |
 | **Claude Code** | `.claude/CLAUDE.md` or `.claude/rules/*.md` | Main spec + optional modular rules |
-| **Codex / OpenClaw** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir, etc. | Per-tool docs |
+| **Cursor** | `.cursor/rules/` | One `.mdc` or `.md` per rule (with frontmatter) |
+| **Codex** | `AGENTS.md`, `.codex/rules/*.rules`, skills dir | Per-tool docs |
 | **Antigravity** (Google) | `.antigravity/rules.md`, `.agent/rules/` | Project rules auto-loaded |
 | **Trae** (ByteDance) | `.trae/project_rules.md` or `.trae/rules` | Markdown |
 | **Code Buddy** (Tencent) | `.codebuddy/rules/`, root `CODEBUDDY.md` or `AGENTS.md` | One `RULE.mdc` per rule in subdirs |
@@ -71,6 +73,8 @@ Examples:
 
 ```bash
 ./install-skill.sh --tool cursor --scope global
+./install-skill.sh --tool openclaw --scope global    # OpenClaw only
+./install-skill.sh --tool claude --scope global      # Claude Code only
 ./install-skill.sh --tool all --scope local --target /path/to/my/project
 ./install-skill.sh --help
 ```
@@ -78,7 +82,7 @@ Examples:
 ### Option A: AI only (no script for spec writing)
 
 - **Cursor**: After running `install-skill.sh` (or manually copying the `aispec-skill/` directory to `.cursor/skills/aispec-skill/` in your project or `~/.cursor/skills/aispec-skill/`), the AI can read `SKILL.md` and add best practices when you ask.
-- **Claude Code / others**: After install, or by cloning and referencing this repo with `@` in chat, the AI follows the skill flow (detect → pick spec → write to your project).
+- **OpenClaw / Claude Code**: Same as Cursor—run `install-skill.sh` for your editor, or clone and reference this repo with `@` in chat; the AI follows the skill flow (detect → pick spec → write to your project).
 
 ### Option B: Install script (optional — installs the spec into a project only)
 

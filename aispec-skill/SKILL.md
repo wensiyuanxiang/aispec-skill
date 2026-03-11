@@ -9,7 +9,7 @@ You help users **initialize or update project best-practice specs** by detecting
 
 ## How This Skill Works (No Script Required)
 
-This skill works **by the AI following this SKILL.md**: when the user asks to add best practices or set up project norms, the AI (Cursor / Claude Code / etc.) reads this file, detects the project from the repo contents, picks the right spec from `best-practices/`, and writes it into the user's project. **No separate script is required** as long as the AI has access to this repo (e.g. skill installed or referenced with `@`). If the AI cannot read `best-practices/` (e.g. user is in another project and the skill repo is not in context), the repo also provides an optional **install script** so the user can run it locally; see the "Script (optional)" section in the root README.
+This skill works **by the AI following this SKILL.md**: when the user asks to add best practices or set up project norms, the AI (**OpenClaw**, **Claude Code**, Cursor, Codex, or any compatible editor) reads this file, detects the project from the repo contents, picks the right spec from `best-practices/`, and writes it into the user's project. **No separate script is required** as long as the AI has access to this repo (e.g. skill installed or referenced with `@`). If the AI cannot read `best-practices/` (e.g. user is in another project and the skill repo is not in context), the repo also provides an optional **install script** so the user can run it locally; see the "Script (optional)" section in the root README.
 
 ---
 

@@ -8,7 +8,7 @@
 
 **一句初始化，规约随栈走。**
 
-通用型 AI 编码助手技能：一份规约、多端落地；一句话初始化，项目即规范。用**同一套**最佳实践内容，在 Cursor、Claude Code、OpenClaw、Codex 等编辑器中生成并落地**项目级规约**。在任意项目里对 AI 说「帮我添加一下最佳实践」或「帮我制定当前项目规范」，AI 会自动识别技术栈并写入对应规约文件。
+AISpec Skill 汇集**主流开发系统与框架**（Next.js、Vue/Nuxt、Flutter、Go、Java、Python、Node、Rust、Tauri、Qt、CLI、AI/LLM 等）的**项目级最佳实践规约**，让代码符合**大厂级软件架构与工程规范**，同时便于**不同成员与团队**的项目管理与协同——**新手也能从一开始就拥有顶级架构**，无需资深架构师手把手搭架子。**完整支持 OpenClaw、Claude Code、Cursor、Codex** — 任选其一，一句话即可把对应规约写入项目；OpenClaw 与 Claude Code 用户与 Cursor 一样安装技能即可使用。
 
 ---
 
@@ -16,10 +16,11 @@
 
 | 价值 | 说明 |
 |------|------|
-| **一致性** | 团队与个人在不同编辑器间使用同一套规范，减少风格漂移与重复劳动。 |
-| **可发现** | 新成员或新项目一键获得成体系的开发规约，而不是从零编写。 |
-| **可维护** | 规约集中在仓库中维护，更新后可再次运行技能同步到项目。 |
-| **多端一致** | 同一份最佳实践可输出到 Cursor、Claude、Codex 等，无需为每个工具各写一份。 |
+| **主流栈 + 大厂级规范** | 规约覆盖主流技术栈，对齐成熟代码库常用架构与约定，项目「说同一种语言」。 |
+| **团队协同** | 多编辑器、多仓库统一规范，成员与团队对齐，减少风格漂移，便于评审与交接。 |
+| **新手友好** | 新成员、新项目一键获得完整、经过验证的规约，无需从零摸索「我们怎么写」或重复造轮子。 |
+| **可维护** | 规约集中维护，更新后重新运行技能即可同步到各项目。 |
+| **多端一致** | 同一套最佳实践可输出到 **OpenClaw**、**Claude Code**、Cursor、Codex 等，无需按工具各写一份。 |
 
 ---
 
@@ -35,13 +36,14 @@
 
 ## 支持的 AI 编辑器
 
-项目级规约路径（仅列工程内，不含用户全局）：
+**完整支持：OpenClaw、Claude Code、Cursor、Codex** — 安装一次，在任选编辑器中使用。项目级规约路径（仅列工程内，不含用户全局）：
 
 | 工具 | 项目规约路径 | 说明 |
 |------|--------------|------|
-| **Cursor** | `.cursor/rules/` | 每条规则一个 `.mdc` 或 `.md`（含 frontmatter） |
+| **OpenClaw** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 与 Codex 同套技能/规则模型 |
 | **Claude Code** | `.claude/CLAUDE.md` 或 `.claude/rules/*.md` | 主规约 + 可选模块化规则 |
-| **Codex / OpenClaw** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 按各工具文档配置 |
+| **Cursor** | `.cursor/rules/` | 每条规则一个 `.mdc` 或 `.md`（含 frontmatter） |
+| **Codex** | `AGENTS.md`、`.codex/rules/*.rules`、技能目录等 | 按各工具文档配置 |
 | **Antigravity** (Google) | `.antigravity/rules.md`、`.agent/rules/` | 项目规则自动加载 |
 | **Trae**（字节） | `.trae/project_rules.md` 或 `.trae/rules` | Markdown |
 | **Code Buddy**（腾讯云） | `.codebuddy/rules/`、根目录 `CODEBUDDY.md` 或 `AGENTS.md` | 每条规则子目录 `RULE.mdc` |
@@ -71,14 +73,15 @@
 
 ```bash
 ./install-skill.sh --tool cursor --scope global
+./install-skill.sh --tool openclaw --scope global    # 仅 OpenClaw
+./install-skill.sh --tool claude --scope global      # 仅 Claude Code
 ./install-skill.sh --tool all --scope local --target /path/to/我的项目
 ./install-skill.sh --help
 ```
 
 ### 方式一：仅靠 AI（写规约无需脚本）
 
-- **Cursor**：执行上述 `install-skill.sh` 或手动将 **`aispec-skill/`** 目录放到项目的 `.cursor/skills/aispec-skill/` 或用户目录 `~/.cursor/skills/aispec-skill/` 后，AI 即可读取 `SKILL.md` 并在你提出「添加最佳实践」时写入规约。
-- **Claude Code / 其他**：安装后，或在对话中用 `@` 引用本仓库，AI 会按技能流程执行「检测项目 → 选择规约 → 写入」。
+- **OpenClaw / Claude Code / Cursor**：执行 `install-skill.sh` 选择对应工具（如 `--tool openclaw` 或 `--tool claude`），或手动将 **`aispec-skill/`** 放到各编辑器技能目录（如 `~/.openclaw/skills/aispec-skill`、`~/.claude/skills/aispec-skill`、`~/.cursor/skills/aispec-skill`）；安装后 AI 即可在对话中按技能流程执行「检测项目 → 选择规约 → 写入」。
 
 ### 方式二：安装脚本（可选，仅用于「把规约装进项目」）
 
